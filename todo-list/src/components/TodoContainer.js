@@ -6,25 +6,15 @@ import {v4 as uuidv4} from 'uuid';
 class TodoContainer extends React.Component{
 
 
+  constructor(props){  
+    super(props);  
+    this.state = {  
+         todos: JSON.parse(localStorage.getItem("todoData"))
+      }  
+  }
 
     state ={
-        todos:[
-            {
-                id: uuidv4(),
-                title: "Setup development environment",
-                completed: true
-              },
-              {
-                id: uuidv4(),
-                title: "Develop website and add content",
-                completed: false
-              },
-              {
-                id: uuidv4(),
-                title: "Deploy to live server",
-                completed: false
-              }
-        ]
+        todos:[]
     }
 
     handleChange = id => {
@@ -40,7 +30,9 @@ class TodoContainer extends React.Component{
             return todo
           }),
         }
-      })
+      });
+
+      localStorage.setItem("todoData", JSON.stringify(this.state.todos))
       };
 
 
@@ -53,6 +45,8 @@ class TodoContainer extends React.Component{
             })
           ]
         });
+
+        localStorage.setItem("todoData", JSON.stringify(this.state.todos))
       };
 
 
@@ -65,6 +59,23 @@ class TodoContainer extends React.Component{
         this.setState({
           todos: [...this.state.todos, newTodo]
         });
+
+        localStorage.setItem("todoData", JSON.stringify(this.state.todos))
+      }
+
+
+      setUpdate = (updateTitle, id) =>{
+        this.setState({
+          todos: this.state.todos.map(todo =>{
+            if(todo.id == id){
+              todo.title = updateTitle
+            }
+            return todo;
+            
+          }),
+        });
+
+        localStorage.setItem("todoData", JSON.stringify(this.state.todos))
       }
 
     render(){
@@ -77,6 +88,7 @@ class TodoContainer extends React.Component{
                 <TodosList todos={this.state.todos} 
                 handleChangeProps={this.handleChange}
                 deleteTodoProps={this.delTodo}
+                setUpdate={this.setUpdate}
                 />
                 </div>
                 </div>
