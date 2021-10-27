@@ -3,8 +3,9 @@ services:
   redis-server:
     image: redis
     container_name: redis
-  node-server:
+  guldan-service:
     build: .
+    image: uali/guldan:1.1
     container_name: guldan
     restart: always
     ports:
