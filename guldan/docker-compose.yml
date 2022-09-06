@@ -1,0 +1,12 @@
+version: '3'
+services:
+  redis-server:
+    image: redis
+    container_name: redis
+  guldan-service:
+    build: .
+    image: uali/guldan:1.1
+    container_name: guldan
+    restart: always
+    ports:
+      - '3000:3000'
